@@ -1,5 +1,9 @@
 # Quiz_Kriptografi
-Oke, saya akan jelaskan cara pakai programnya dengan bahasa yang lebih santai dan gampang dimengerti. Yuk, kita mulai:
+Nama : Muhmmad Ilham Afif
+Rombel : 3
+NIM : 4611422090
+
+Tutorial Program :
 
 1. Menjalankan Program:
    
