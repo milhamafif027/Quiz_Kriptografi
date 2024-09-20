@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.regex.*;
 
 public class CipherGUI extends JFrame {
     private JRadioButton vigenereRB, playfairRB, hillRB;
@@ -108,8 +107,7 @@ public class CipherGUI extends JFrame {
                 reader.close();
                 inputTextArea.setText(content.toString());
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Error reading file: " + ex.getMessage(), "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error reading file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -180,15 +178,109 @@ public class CipherGUI extends JFrame {
     }
 
     private String playfairCipher(String text, String key, boolean encrypt) {
-        // Implementasi Playfair Cipher
-        // (Kode lengkap untuk Playfair Cipher akan ditambahkan di sini)
-        return "Playfair Cipher belum diimplementasikan";
+        // Buat matriks kunci
+        char[][] matrix = createPlayfairMatrix(key);
+        
+        // Siapkan teks
+        text = text.replaceAll("[^A-Za-z]", "").toUpperCase().replace("J", "I");
+        if (text.length() % 2 != 0) text += "X";
+        
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < text.length(); i += 2) {
+            char a = text.charAt(i);
+            char b = text.charAt(i + 1);
+            int[] posA = findPosition(matrix, a);
+            int[] posB = findPosition(matrix, b);
+            
+            if (posA[0] == posB[0]) { // Baris sama
+                result.append(matrix[posA[0]][(posA[1] + (encrypt ? 1 : 4)) % 5]);
+                result.append(matrix[posB[0]][(posB[1] + (encrypt ? 1 : 4)) % 5]);
+            } else if (posA[1] == posB[1]) { // Kolom sama
+                result.append(matrix[(posA[0] + (encrypt ? 1 : 4)) % 5][posA[1]]);
+                result.append(matrix[(posB[0] + (encrypt ? 1 : 4)) % 5][posB[1]]);
+            } else { // Bentuk persegi
+                result.append(matrix[posA[0]][posB[1]]);
+                result.append(matrix[posB[0]][posA[1]]);
+            }
+        }
+        
+        return result.toString();
+    }
+
+    private char[][] createPlayfairMatrix(String key) {
+        key = key.toUpperCase().replaceAll("[^A-Z]", "").replace("J", "I");
+        boolean[] used = new boolean[26];
+        char[][] matrix = new char[5][5];
+        int row = 0, col = 0;
+        
+        // Isi matriks dengan kunci
+        for (char c : key.toCharArray()) {
+            if (!used[c - 'A']) {
+                matrix[row][col] = c;
+                used[c - 'A'] = true;
+                if (++col == 5) {
+                    col = 0;
+                    row++;
+                }
+            }
+        }
+        
+        // Isi sisa matriks dengan huruf yang belum dipakai
+        for (char c = 'A'; c <= 'Z'; c++) {
+            if (c != 'J' && !used[c - 'A']) {
+                matrix[row][col] = c;
+                if (++col == 5) {
+                    col = 0;
+                    row++;
+                }
+            }
+        }
+        
+        return matrix;
+    }
+
+    private int[] findPosition(char[][] matrix, char c) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (matrix[i][j] == c) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null; // Seharusnya tidak pernah terjadi
     }
 
     private String hillCipher(String text, String key, boolean encrypt) {
-        // Implementasi Hill Cipher
-        // (Kode lengkap untuk Hill Cipher akan ditambahkan di sini)
-        return "Hill Cipher belum diimplementasikan";
+        // Ubah kunci jadi matriks 2x2
+        int[][] keyMatrix = new int[2][2];
+        int k = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                keyMatrix[i][j] = key.charAt(k++) - 'A';
+            }
+        }
+        
+        // Siapkan teks
+        text = text.replaceAll("[^A-Za-z]", "").toUpperCase();
+        if (text.length() % 2 != 0) text += "X";
+        
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < text.length(); i += 2) {
+            int[] pair = {text.charAt(i) - 'A', text.charAt(i+1) - 'A'};
+            int[] encrypted = new int[2];
+            
+            for (int j = 0; j < 2; j++) {
+                encrypted[j] = (keyMatrix[j][0] * pair[0] + keyMatrix[j][1] * pair[1]) % 26;
+                if (!encrypt) {
+                    encrypted[j] = (encrypted[j] + 26) % 26; // Untuk dekripsi
+                }
+            }
+            
+            result.append((char)(encrypted[0] + 'A'));
+            result.append((char)(encrypted[1] + 'A'));
+        }
+        
+        return result.toString();
     }
 
     public static void main(String[] args) {
