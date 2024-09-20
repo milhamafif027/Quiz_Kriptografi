@@ -44,9 +44,5 @@ Oke, saya akan jelaskan cara pakai programnya dengan bahasa yang lebih santai da
    - Programnya cuma ngolah huruf A-Z, ga peduli besar kecil.
    - Hasil enkripsi/dekripsi selalu pake huruf gede.
 
-6. Saran Buat Ngembangkin:
-   - Bikin Playfair sama Hill Cipher-nya.
-   - Tambahin fitur buat nyimpen hasil ke file.
-   - Perbagus cara nangani kesalahan, misalnya kalo ada input yang salah.
+6
 
-Gimana? Udah lebih gampang dimengerti kan? Kalo masih ada yang bingung atau mau tanya-tanya soal bikin Playfair atau Hill Cipher-nya, tanya aja ya!
