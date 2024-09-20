@@ -36,17 +36,5 @@ Tutorial Program :
 
 3. Pake Vigenere Cipher:
    
-   Ini yang udah jadi. Tinggal pilih "Vigenere Cipher", masukin pesan sama kunci, terus klik "Enkripsi" atau "Dekripsi". Pesannya cuma huruf A-Z aja yang diproses, yang lain dilewatin.
-
-4. Playfair sama Hill Cipher:
-   
-   Nah, ini belum jadi. Kalo dipilih, cuma bakal muncul pesan "belum diimplementasikan".
-
-5. Yang Perlu Diinget:
-   - Cuma Vigenere yang udah bisa dipake.
-   - Playfair sama Hill masih perlu dikerjain.
-   - Programnya cuma ngolah huruf A-Z, ga peduli besar kecil.
-   - Hasil enkripsi/dekripsi selalu pake huruf gede.
-
-6
+   Ini yang udah jadi. Tinggal pilih "Vigenere Cipher" atau yang lain, masukin pesan sama kunci, terus klik "Enkripsi" atau "Dekripsi". Pesannya cuma huruf A-Z aja yang diproses, yang lain dilewatin.
 
